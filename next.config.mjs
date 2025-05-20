@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  images: {
+    remotePatterns: [new URL("https://enem.dev/**")],
+  },
+};
 
 export default nextConfig;
