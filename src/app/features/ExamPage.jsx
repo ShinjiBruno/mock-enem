@@ -3,9 +3,9 @@ import fs from "fs";
 import path from "path";
 
 export default async function ExamPage({ params, searchParams }) {
-  const { year, day } = params;
-  const lang = searchParams.lang || "ingles";
-  const timer = searchParams.timer || "true";
+  const { year, day } = await params;
+  const lang = (await searchParams).lang || "ingles";
+  const timer = (await searchParams).timer || "true";
 
   const isFirstDay = day === "1";
   const firstDayOffset = isFirstDay ? 1 : 91;
@@ -29,9 +29,6 @@ export default async function ExamPage({ params, searchParams }) {
   const data2 = await res_from_45_to_90.json();
 
   const questions = data1.questions.concat(data2.questions);
-
-  const filePath = path.join(process.cwd(), "questions-debug.json");
-  fs.writeFileSync(filePath, JSON.stringify(questions, null, 2), "utf-8");
 
   return (
     <ExamClient
