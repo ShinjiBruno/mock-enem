@@ -27,7 +27,7 @@ export default function ExamClient({
     selectAnswer,
     saveNote,
     allQuestionsAnswered,
-  } = useExamState(questions);
+  } = useExamState(questions, year, day);
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -75,16 +75,8 @@ export default function ExamClient({
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col lg:flex-row gap-6">
-        <div className="lg:w-1/4 bg-card rounded-lg p-4 shadow-sm">
-          <h2 className="text-xl font-bold mb-4">Navegação</h2>
-          <QuestionNav
-            questions={questions}
-            answers={answers}
-            currentIndex={currentQuestionIndex}
-            onSelectQuestion={setCurrentQuestionIndex}
-          />
-
-          <div className="mt-6">
+        <div className="lg:w-1/4 bg-card rounded-lg p-4 shadow-sm h-fit ">
+          <div className="mt-6 mb-6">
             {useTimer && <ExamTimer duration={5 * 60 * 60} />}
 
             <div className="mt-6 flex flex-col gap-2">
@@ -96,6 +88,13 @@ export default function ExamClient({
               </button>
             </div>
           </div>
+          <h2 className="text-xl font-bold mb-4">Navegação</h2>
+          <QuestionNav
+            questions={questions}
+            answers={answers}
+            currentIndex={currentQuestionIndex}
+            onSelectQuestion={setCurrentQuestionIndex}
+          />
         </div>
 
         <div className="lg:w-3/4">

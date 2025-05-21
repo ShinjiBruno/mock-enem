@@ -27,7 +27,7 @@ export default function ExamYearsClient({ availableTests }) {
   const [examOptions, setExamOptions] = useState({
     year: null,
     day: null,
-    language: "pt",
+    language: "english",
     useTimer: true,
   });
   const [open, setOpen] = useState(false);
@@ -104,20 +104,20 @@ export default function ExamYearsClient({ availableTests }) {
                 </SelectContent>
               </Select>
             </div>
-
-            <div className="grid gap-2">
-              <Label htmlFor="language">Idioma</Label>
-              <Select defaultValue="pt" onValueChange={handleLanguageSelect}>
-                <SelectTrigger id="language">
-                  <SelectValue placeholder="Selecione o idioma" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="en">Inglês</SelectItem>
-                  <SelectItem value="es">Espanhol</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
+            {examOptions.day !== "2" && (
+              <div className="grid gap-2">
+                <Label htmlFor="language">Idioma</Label>
+                <Select defaultValue="pt" onValueChange={handleLanguageSelect}>
+                  <SelectTrigger id="language">
+                    <SelectValue placeholder="Selecione o idioma" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="english">Inglês</SelectItem>
+                    <SelectItem value="spanish">Espanhol</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <div className="flex items-center gap-2">
               <Switch
                 id="timer"

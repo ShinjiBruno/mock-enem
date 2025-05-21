@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function useExamState(questions) {
+export default function useExamState(questions, year, day) {
   const [answers, setAnswers] = useState({});
 
   const [notes, setNotes] = useState({});
@@ -15,21 +15,24 @@ export default function useExamState(questions) {
 
   useEffect(() => {
     if (typeof window !== "undefined" && Object.keys(answers).length > 0) {
-      localStorage.setItem("examAnswers", JSON.stringify(answers));
+      localStorage.setItem(
+        `examAnswers-${year}-${day}`,
+        JSON.stringify(answers),
+      );
     }
-  }, [answers]);
+  }, [answers, year, day]);
 
   useEffect(() => {
     if (typeof window !== "undefined" && Object.keys(notes).length > 0) {
-      localStorage.setItem("examNotes", JSON.stringify(notes));
+      localStorage.setItem(`examNotes-${year}-${day}`, JSON.stringify(notes));
     }
-  }, [notes]);
+  }, [notes, year, day]);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      const savedAnswers = localStorage.getItem("examAnswers");
-      const savedNotes = localStorage.getItem("examNotes");
-
+      const savedAnswers = localStorage.getItem(`examAnswers-${year}-${day}`);
+      const savedNotes = localStorage.getItem(`examNotes-${year}-${day}`);
+      console.log("examAnswer:...........", `examAnswers-${year}-${day}`);
       if (savedAnswers) {
         setAnswers(JSON.parse(savedAnswers));
       }
@@ -38,7 +41,7 @@ export default function useExamState(questions) {
         setNotes(JSON.parse(savedNotes));
       }
     }
-  }, []);
+  }, [year, day]);
 
   const selectAnswer = (questionIndex, letter) => {
     setAnswers((prev) => ({

@@ -117,12 +117,12 @@ export default function ExamSummary({
                 </div>
                 <div className="p-2">
                   <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
-                    {disciplineQuestions.map((question) => {
+                    {disciplineQuestions.map((question, index) => {
                       const isAnswered = answers[question.index] !== undefined;
 
                       return (
                         <div
-                          key={question.index}
+                          key={index}
                           className={`
                           aspect-square flex items-center justify-center rounded-md text-sm font-medium
                           ${

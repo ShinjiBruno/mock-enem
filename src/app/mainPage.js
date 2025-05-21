@@ -17,7 +17,7 @@ export default function MainPage() {
         </div>
       </header>
 
-      <main className="flex-1 py-16 px-4">
+      <main className="flex-1 px-4">
         <div className="container mx-auto max-w-5xl">
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <Card>
@@ -64,7 +64,9 @@ export default function MainPage() {
               sua vida acadêmica.
             </p>
             <Link href="/mock-exams/years">
-              <Button size="lg">Ver Simulados Disponíveis</Button>
+              <Button className="cursor-pointer" size="lg">
+                Ver Simulados Disponíveis
+              </Button>
             </Link>
           </div>
         </div>

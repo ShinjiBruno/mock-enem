@@ -6,7 +6,5 @@ export default async function ExamYearsPage() {
   });
   const availableTests = await res.json();
 
-  console.log(availableTests);
-
   return <ExamYearsClient availableTests={availableTests} />;
 }

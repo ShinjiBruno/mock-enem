@@ -7,7 +7,7 @@ export default function QuestionNav({
   onSelectQuestion,
 }) {
   return (
-    <div className="grid grid-cols-5 gap-2">
+    <div className="grid grid-cols-5 gap-2 p-3 h-100 overflow-y-auto">
       {questions.map((question, index) => {
         const isAnswered = answers[question.index] !== undefined;
         const isCurrent = index === currentIndex;

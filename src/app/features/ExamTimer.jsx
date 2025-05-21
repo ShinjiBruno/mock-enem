@@ -37,14 +37,14 @@ export default function ExamTimer({ duration, onTimeEnd }) {
         {String(hours).padStart(2, "0")}:{String(minutes).padStart(2, "0")}:
         {String(seconds).padStart(2, "0")}
       </div>
-      <Button
+      {/* <Button
         onClick={toggleTimer}
         variant="outline"
         size="sm"
         className="w-full"
       >
         {isRunning ? "Pausar" : "Continuar"}
-      </Button>
+      </Button> */}
     </div>
   );
 }

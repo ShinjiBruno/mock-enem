@@ -4,6 +4,23 @@ import { useState } from "react";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 
+function formatMarkdownText(text) {
+  if (!text) return "";
+
+  let formattedText = text.replace(/!\[[^\]]*\]\([^)]+\)/g, "");
+
+  formattedText = formattedText.replace(
+    /(\*\*|__)(.*?)\1/g,
+    "<strong>$2</strong>",
+  );
+
+  formattedText = formattedText.replace(/(\*|_)(.*?)\1/g, "<em>$2</em>");
+
+  formattedText = formattedText.replace(/\n{2,}/g, "<br/><br/>");
+
+  return formattedText;
+}
+
 export default function QuestionCard({
   question,
   selectedAnswer,
@@ -35,9 +52,12 @@ export default function QuestionCard({
         </span>
       </div>
 
-      <div className="prose dark:prose-invert max-w-none mb-6">
-        <p>{question.context}</p>
-      </div>
+      <div
+        className="prose dark:prose-invert max-w-none mb-6"
+        dangerouslySetInnerHTML={{
+          __html: formatMarkdownText(question.context),
+        }}
+      />
 
       {question.files && question.files.length > 0 && (
         <div className="mb-6">
@@ -47,7 +67,7 @@ export default function QuestionCard({
                 src={file}
                 alt={`Question Image ${question.index}`}
                 fill
-                className="object-contain"
+                className="object-contain size-auto "
               />
             </div>
           ))}
