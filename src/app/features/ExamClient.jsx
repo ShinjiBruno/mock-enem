@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useExamState from "../hooks/useExam";
 import QuestionCard from "./QuestionCard";
@@ -30,7 +30,14 @@ export default function ExamClient({
   } = useExamState(questions, year, day);
 
   const currentQuestion = questions[currentQuestionIndex];
-
+  useEffect(() => {
+    const handleBeforeUnload = (e) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
+  }, []);
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
@@ -65,6 +72,7 @@ export default function ExamClient({
       <ExamSummary
         questions={questions}
         answers={answers}
+        onCurrentQuestion={(index) => setCurrentQuestionIndex(index)}
         onBack={() => setShowSummary(false)}
         onFinish={handleFinish}
         canFinish={allQuestionsAnswered()}
@@ -120,13 +128,17 @@ export default function ExamClient({
             >
               Anterior
             </button>
-
             <button
-              onClick={handleNext}
-              disabled={currentQuestionIndex === questions.length - 1}
+              onClick={
+                currentQuestionIndex !== questions.length - 1
+                  ? handleNext
+                  : () => setShowSummary(true)
+              }
               className="bg-secondary text-secondary-foreground hover:bg-secondary/90 py-2 px-4 rounded-md disabled:opacity-50"
             >
-              Próxima
+              {currentQuestionIndex !== questions.length - 1
+                ? "Próxima"
+                : "Finalizar"}
             </button>
           </div>
         </div>

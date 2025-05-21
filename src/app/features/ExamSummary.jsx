@@ -16,6 +16,7 @@ import { useState } from "react";
 export default function ExamSummary({
   questions,
   answers,
+  onCurrentQuestion,
   onBack,
   onFinish,
   canFinish,
@@ -106,24 +107,20 @@ export default function ExamSummary({
         )}
 
         <div className="space-y-6">
-          {Object.entries(questionsByDiscipline).map(
-            ([discipline, disciplineQuestions]) => (
-              <div
-                key={discipline}
-                className="border rounded-lg overflow-hidden"
-              >
-                <div className="bg-secondary/10 px-4 py-2 font-medium capitalize">
-                  {discipline}
-                </div>
-                <div className="p-2">
-                  <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
-                    {disciplineQuestions.map((question, index) => {
-                      const isAnswered = answers[question.index] !== undefined;
+          <div className="p-2">
+            <div className="grid grid-cols-5 sm:grid-cols-10 gap-2">
+              {questions.map((question, index) => {
+                const isAnswered = answers[question.index] !== undefined;
 
-                      return (
-                        <div
-                          key={index}
-                          className={`
+                return (
+                  <div
+                    onClick={() => {
+                      onCurrentQuestion(index);
+                      onBack();
+                    }}
+                    key={index}
+                    className={`
+                        cursor-pointer
                           aspect-square flex items-center justify-center rounded-md text-sm font-medium
                           ${
                             isAnswered
@@ -131,16 +128,13 @@ export default function ExamSummary({
                               : "bg-destructive/20 text-destructive"
                           }
                         `}
-                        >
-                          {question.index}
-                        </div>
-                      );
-                    })}
+                  >
+                    {question.index}
                   </div>
-                </div>
-              </div>
-            ),
-          )}
+                );
+              })}
+            </div>
+          </div>
         </div>
 
         <div className="mt-8 flex justify-between">

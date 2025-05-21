@@ -27,7 +27,7 @@ export default function ExamYearsClient({ availableTests }) {
   const [examOptions, setExamOptions] = useState({
     year: null,
     day: null,
-    language: "english",
+    language: "ingles",
     useTimer: true,
   });
   const [open, setOpen] = useState(false);
@@ -62,7 +62,7 @@ export default function ExamYearsClient({ availableTests }) {
   };
 
   return (
-    <div className="container px-10 py-10">
+    <div className="container px-10 py-0">
       <h1 className="text-3xl font-bold mb-6">Simulados Disponíveis</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {availableTests.map((exam, index) => (
@@ -112,8 +112,8 @@ export default function ExamYearsClient({ availableTests }) {
                     <SelectValue placeholder="Selecione o idioma" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="english">Inglês</SelectItem>
-                    <SelectItem value="spanish">Espanhol</SelectItem>
+                    <SelectItem value="ingles">Inglês</SelectItem>
+                    <SelectItem value="espanhol">Espanhol</SelectItem>
                   </SelectContent>
                 </Select>
               </div>

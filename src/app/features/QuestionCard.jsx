@@ -55,7 +55,7 @@ export default function QuestionCard({
       <div
         className="prose dark:prose-invert max-w-none mb-6"
         dangerouslySetInnerHTML={{
-          __html: formatMarkdownText(question.context),
+          __html: formatMarkdownText(question.context ?? ""),
         }}
       />
 
