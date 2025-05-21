@@ -9,14 +9,12 @@ export default function SimpleHeader() {
 
   return (
     <header className="w-full flex items-center justify-between px-6 py-4 bg-background border-b">
-      {/* Mock-ENEM à esquerda, clicável para mainPage */}
       <Link
         href="/"
         className="text-lg font-bold tracking-tight sm:text-xl md:text-xl"
       >
         Mock-ENEM
       </Link>
-      {/* GitHub + Switch à direita */}
       <div className="flex items-center gap-6">
         <Link
           href="https://github.com/ShinjiBruno/mock-enem"
@@ -39,7 +37,6 @@ export default function SimpleHeader() {
         <div className="flex items-center gap-2">
           <span className="text-xs text-muted-foreground">☀️</span>
           <Switch
-            checked={theme === "dark"}
             onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
             aria-label="Alternar tema"
           />

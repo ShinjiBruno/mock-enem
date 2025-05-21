@@ -4,8 +4,8 @@ import path from "path";
 
 export default async function ExamPage({ params, searchParams }) {
   const { year, day } = params;
-  const lang = (await searchParams.lang) || "ingles";
-  const timer = (await searchParams.timer) || "true";
+  const lang = searchParams.lang || "ingles";
+  const timer = searchParams.timer || "true";
 
   const isFirstDay = day === "1";
   const firstDayOffset = isFirstDay ? 1 : 91;
