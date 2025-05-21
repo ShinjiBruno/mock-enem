@@ -2,11 +2,13 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import SimpleHeader from "./features/Header";
 
 export default function MainPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <header className="bg-gradient-to-b from-primary/20 to-background py-16 px-4">
+      <SimpleHeader />
+      <header className="bg-gradient-to-b from-primary/20 to-background py-8 px-4">
         <div className="container mx-auto max-w-5xl text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-6">
             Mock ENEM
