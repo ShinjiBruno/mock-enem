@@ -8,15 +8,8 @@ import QuestionNav from "./QuestionNav";
 import ExamTimer from "./ExamTimer";
 import ExamSummary from "./ExamSummary";
 
-export default function ExamClient({
-  questions,
-  year,
-  day,
-  language,
-  useTimer,
-}) {
+export default function ExamClient({ questions, year, day, useTimer }) {
   const [showSummary, setShowSummary] = useState(false);
-  const [examFinished, setExamFinished] = useState(false);
   const router = useRouter();
 
   const {
@@ -52,10 +45,14 @@ export default function ExamClient({
 
   const handleFinish = () => {
     if (allQuestionsAnswered()) {
-      setExamFinished(true);
-      localStorage.removeItem("examAnswers");
-      localStorage.removeItem("examNotes");
-      router.push(`/results/${year}/${day}?score=${calculateScore()}`);
+      localStorage.removeItem(`examAnswers-${year}-${day}`);
+      localStorage.removeItem(`examNotes-${year}-${day}`);
+
+      localStorage.setItem("examReviewQuestions", JSON.stringify(questions));
+      localStorage.setItem("examReviewAnswers", JSON.stringify(answers));
+      router.push(
+        `/mock-exams/results/${year}/${day}?score=${calculateScore()}&questions=${questions.length}`,
+      );
     }
   };
 

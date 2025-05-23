@@ -62,83 +62,88 @@ export default function ExamYearsClient({ availableTests }) {
   };
 
   return (
-    <div className="container px-10 py-0">
-      <h1 className="text-3xl font-bold mb-6">Simulados Disponíveis</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {availableTests.map((exam, index) => (
-          <Button
-            onClick={() => handleExamClick(exam)}
-            key={index}
-            variant="outline"
-            className="cursor-pointer h-auto p-4 text-left flex flex-col items-start"
-          >
-            <span className="text-xl font-medium">{exam.title}</span>
-            <span className="text-sm text-muted-foreground">{exam.year}</span>
-          </Button>
-        ))}
-      </div>
+    <div className="grid grid-cols-8 px-10 py-5">
+      <div className="col-span-6 col-start-2">
+        <h1 className="text-3xl font-bold mb-6">Simulados Disponíveis</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {availableTests.map((exam, index) => (
+            <Button
+              onClick={() => handleExamClick(exam)}
+              key={index}
+              variant="outline"
+              className="cursor-pointer h-auto p-4 text-left flex flex-col items-start"
+            >
+              <span className="text-xl font-medium">{exam.title}</span>
+              <span className="text-sm text-muted-foreground">{exam.year}</span>
+            </Button>
+          ))}
+        </div>
 
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Configurar Simulado</DialogTitle>
-            <DialogDescription>
-              Selecione as opções para o simulado {selectedExam?.title}
-            </DialogDescription>
-          </DialogHeader>
+        <Dialog open={open} onOpenChange={setOpen}>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Configurar Simulado</DialogTitle>
+              <DialogDescription>
+                Selecione as opções para o simulado {selectedExam?.title}
+              </DialogDescription>
+            </DialogHeader>
 
-          <div className="grid gap-4 py-4">
-            <div className="grid gap-2">
-              <Label htmlFor="day">Dia da Prova</Label>
-              <Select onValueChange={handleDaySelect}>
-                <SelectTrigger id="day">
-                  <SelectValue placeholder="Selecione o dia" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="1">
-                    1º Dia - Linguagens e Humanas
-                  </SelectItem>
-                  <SelectItem value="2">
-                    2º Dia - Ciências da Natureza e Matemática
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            {examOptions.day !== "2" && (
+            <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <Label htmlFor="language">Idioma</Label>
-                <Select defaultValue="pt" onValueChange={handleLanguageSelect}>
-                  <SelectTrigger id="language">
-                    <SelectValue placeholder="Selecione o idioma" />
+                <Label htmlFor="day">Dia da Prova</Label>
+                <Select onValueChange={handleDaySelect}>
+                  <SelectTrigger id="day">
+                    <SelectValue placeholder="Selecione o dia" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="ingles">Inglês</SelectItem>
-                    <SelectItem value="espanhol">Espanhol</SelectItem>
+                    <SelectItem value="1">
+                      1º Dia - Linguagens e Humanas
+                    </SelectItem>
+                    <SelectItem value="2">
+                      2º Dia - Ciências da Natureza e Matemática
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-            )}
-            <div className="flex items-center gap-2">
-              <Switch
-                id="timer"
-                defaultChecked
-                onCheckedChange={handleTimerToggle}
-              />
-              <Label htmlFor="timer">Usar cronômetro</Label>
+              {examOptions.day !== "2" && (
+                <div className="grid gap-2">
+                  <Label htmlFor="language">Idioma</Label>
+                  <Select
+                    defaultValue="pt"
+                    onValueChange={handleLanguageSelect}
+                  >
+                    <SelectTrigger id="language">
+                      <SelectValue placeholder="Selecione o idioma" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="ingles">Inglês</SelectItem>
+                      <SelectItem value="espanhol">Espanhol</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
+              <div className="flex items-center gap-2">
+                <Switch
+                  id="timer"
+                  defaultChecked
+                  onCheckedChange={handleTimerToggle}
+                />
+                <Label htmlFor="timer">Usar cronômetro</Label>
+              </div>
             </div>
-          </div>
 
-          <DialogFooter>
-            <Button
-              onClick={handleStartExam}
-              disabled={!isOptionsSelected}
-              className="cursor-pointer"
-            >
-              Iniciar Prova
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            <DialogFooter>
+              <Button
+                onClick={handleStartExam}
+                disabled={!isOptionsSelected}
+                className="cursor-pointer"
+              >
+                Iniciar Prova
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      </div>
     </div>
   );
 }

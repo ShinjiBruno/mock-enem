@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -29,8 +29,13 @@ export default function QuestionCard({
   onSaveNote,
   questionNumber,
   totalQuestions,
+  showCorrection = false,
 }) {
-  const [currentNote, setCurrentNote] = useState(note);
+  const [currentNote, setCurrentNote] = useState(note || "");
+
+  useEffect(() => {
+    setCurrentNote(note || "");
+  }, [note, question.index]);
 
   const handleNoteChange = (e) => {
     const text = e.target.value;
@@ -78,44 +83,54 @@ export default function QuestionCard({
         <p className="font-medium mb-4">{question.alternativesIntroduction}</p>
 
         <div className="space-y-3">
-          {question.alternatives.map((alternative) => (
-            <div
-              key={alternative.letter}
-              className={`flex items-start p-3 rounded-md cursor-pointer border ${
-                selectedAnswer === alternative.letter
-                  ? "border-primary bg-primary/10"
-                  : "border-border hover:bg-muted/50"
-              }`}
-              onClick={() => onSelectAnswer(alternative.letter)}
-            >
-              <div className="mr-3">
-                <div
-                  className={`w-6 h-6 rounded-full flex items-center justify-center border ${
-                    selectedAnswer === alternative.letter
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "border-border"
-                  }`}
-                >
-                  {alternative.letter}
+          {question.alternatives.map((alternative) => {
+            const isSelected = selectedAnswer === alternative.letter;
+            const isCorrect =
+              question.correctAlternative === alternative.letter;
+
+            return (
+              <div
+                key={alternative.letter}
+                className={`flex items-start p-3 rounded-md cursor-pointer border ${
+                  selectedAnswer === alternative.letter
+                    ? "border-primary bg-primary/10"
+                    : "border-border hover:bg-muted/50"
+                }
+                    ${isSelected ? "border-primary bg-primary/10" : "border-border"}
+            ${showCorrection && isCorrect ? "ring-2 ring-green-500" : ""}
+            ${showCorrection && isSelected && !isCorrect ? "ring-2 ring-red-500" : ""}
+                    `}
+                onClick={() => onSelectAnswer(alternative.letter)}
+              >
+                <div className="mr-3">
+                  <div
+                    className={`w-6 h-6 rounded-full flex items-center justify-center border ${
+                      selectedAnswer === alternative.letter
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "border-border"
+                    }`}
+                  >
+                    {alternative.letter}
+                  </div>
+                </div>
+
+                <div className="flex-1">
+                  <p>{alternative.text}</p>
+
+                  {alternative.file && (
+                    <div className="mt-2 relative w-full max-w-sm h-40">
+                      <Image
+                        src={alternative.file}
+                        alt={`Imagem da alternativa ${alternative.letter}`}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
-
-              <div className="flex-1">
-                <p>{alternative.text}</p>
-
-                {alternative.file && (
-                  <div className="mt-2 relative w-full max-w-sm h-40">
-                    <Image
-                      src={alternative.file}
-                      alt={`Imagem da alternativa ${alternative.letter}`}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 

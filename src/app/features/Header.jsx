@@ -1,14 +1,22 @@
 "use client";
 import Link from "next/link";
-import { Switch } from "@/components/ui/switch";
 import { useTheme } from "next-themes";
-import { Github } from "lucide-react";
+import { Github, Sun, Moon } from "lucide-react";
+import { useEffect, useState } from "react";
 
-export default function SimpleHeader() {
+export default function SimpleHeader({ bgColor }) {
   const { theme, setTheme } = useTheme();
 
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <header className="w-full flex items-center justify-between px-6 py-4 bg-background border-b">
+    <header
+      className={`w-full flex items-center justify-between px-6 py-4 ${bgColor ? bgColor : ""}`}
+    >
       <Link
         href="/"
         className="text-lg font-bold tracking-tight sm:text-xl md:text-xl"
@@ -34,13 +42,13 @@ export default function SimpleHeader() {
           </svg>
           <span className="sr-only">GitHub</span>
         </Link>
-        <div className="flex items-center gap-2">
-          <span className="text-xs text-muted-foreground">☀️</span>
-          <Switch
-            onCheckedChange={(checked) => setTheme(checked ? "dark" : "light")}
-            aria-label="Alternar tema"
-          />
-          <span className="text-xs text-muted-foreground">🌙</span>
+        <div
+          className="flex items-center gap-2  cursor-pointer hover:opacity-50"
+          onClick={() => {
+            setTheme(theme === "dark" ? "light" : "dark");
+          }}
+        >
+          {mounted ? theme === "dark" ? <Moon /> : <Sun /> : null}
         </div>
       </div>
     </header>

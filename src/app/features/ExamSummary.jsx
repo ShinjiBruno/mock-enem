@@ -27,15 +27,6 @@ export default function ExamSummary({
   const totalQuestions = questions.length;
   const unansweredCount = totalQuestions - answeredCount;
 
-  const questionsByDiscipline = questions.reduce((acc, question) => {
-    const discipline = question.discipline;
-    if (!acc[discipline]) {
-      acc[discipline] = [];
-    }
-    acc[discipline].push(question);
-    return acc;
-  }, {});
-
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="bg-card rounded-lg p-6 shadow-md">
@@ -80,7 +71,7 @@ export default function ExamSummary({
           </div>
         </div>
 
-        {unansweredCount > 0 && (
+        {/* {unansweredCount > 0 && (
           <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
             <div className="flex">
               <div className="flex-shrink-0">
@@ -104,7 +95,7 @@ export default function ExamSummary({
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         <div className="space-y-6">
           <div className="p-2">

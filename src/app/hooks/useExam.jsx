@@ -32,7 +32,6 @@ export default function useExamState(questions, year, day) {
     if (typeof window !== "undefined") {
       const savedAnswers = localStorage.getItem(`examAnswers-${year}-${day}`);
       const savedNotes = localStorage.getItem(`examNotes-${year}-${day}`);
-      console.log("examAnswer:...........", `examAnswers-${year}-${day}`);
       if (savedAnswers) {
         setAnswers(JSON.parse(savedAnswers));
       }

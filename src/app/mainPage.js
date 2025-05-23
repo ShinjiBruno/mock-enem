@@ -7,7 +7,7 @@ import SimpleHeader from "./features/Header";
 export default function MainPage() {
   return (
     <div className="flex flex-col min-h-screen">
-      <SimpleHeader />
+      <SimpleHeader bgColor={"bg-primary/20"} />
       <header className="bg-gradient-to-b from-primary/20 to-background py-8 px-4">
         <div className="container mx-auto max-w-5xl text-center">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-6">
