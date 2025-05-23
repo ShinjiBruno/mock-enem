@@ -11,13 +11,13 @@ export default async function ExamPage({ params, searchParams }) {
   //limit cant be >50
   //https://docs.enem.dev/rate-limits
   const res_from_1_to_45 = await fetch(
-    `https://api.enem.dev/v1/exams/${year}/questions?limit=5&offset=${firstDayOffset}&language=${lang}`,
+    `https://api.enem.dev/v1/exams/${year}/questions?limit=44&offset=${firstDayOffset}&language=${lang}`,
     {
       cache: "force-cache",
     },
   );
   const res_from_45_to_90 = await fetch(
-    `https://api.enem.dev/v1/exams/${year}/questions?limit=0&offset=${secondDayOffset}&language=${lang}`,
+    `https://api.enem.dev/v1/exams/${year}/questions?limit=44&offset=${secondDayOffset}&language=${lang}`,
     {
       cache: "force-cache",
     },
