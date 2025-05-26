@@ -9,7 +9,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
 import {
@@ -21,8 +20,10 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/spinner";
 
 export default function ExamYearsClient({ availableTests }) {
+  const [isStartExamLoading, setIsStartExamLoading] = useState(false);
   const [isOptionsSelected, setIsOptionsSelected] = useState(false);
   const [examOptions, setExamOptions] = useState({
     year: null,
@@ -55,7 +56,7 @@ export default function ExamYearsClient({ availableTests }) {
 
   const handleStartExam = () => {
     if (!examOptions.day) return;
-
+    setIsStartExamLoading(true);
     router.push(
       `/mock-exams/years/${selectedExam.year}/${examOptions.day}?lang=${examOptions.language}&timer=${examOptions.useTimer}`,
     );
@@ -122,23 +123,15 @@ export default function ExamYearsClient({ availableTests }) {
                   </Select>
                 </div>
               )}
-              <div className="flex items-center gap-2">
-                <Switch
-                  id="timer"
-                  defaultChecked
-                  onCheckedChange={handleTimerToggle}
-                />
-                <Label htmlFor="timer">Usar cronômetro</Label>
-              </div>
             </div>
 
             <DialogFooter>
               <Button
                 onClick={handleStartExam}
-                disabled={!isOptionsSelected}
-                className="cursor-pointer"
+                disabled={!isOptionsSelected || isStartExamLoading}
+                className="cursor-pointer w-25  "
               >
-                Iniciar Prova
+                {!isStartExamLoading ? "Iniciar Prova" : <Spinner />}
               </Button>
             </DialogFooter>
           </DialogContent>

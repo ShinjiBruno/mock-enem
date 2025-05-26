@@ -3,8 +3,14 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SimpleHeader from "./features/Header";
+import { useState } from "react";
+import { Spinner } from "@/components/spinner";
+import { useRouter } from "next/navigation";
 
 export default function MainPage() {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
   return (
     <div className="flex flex-col min-h-screen">
       <SimpleHeader bgColor={"bg-primary/20"} />
@@ -65,11 +71,17 @@ export default function MainPage() {
               Prepare-se adequadamente para um dos exames mais importantes da
               sua vida acadêmica.
             </p>
-            <Link href="/mock-exams/years">
-              <Button className="cursor-pointer" size="lg">
-                Ver Simulados Disponíveis
-              </Button>
-            </Link>
+            <Button
+              disabled={isLoading}
+              className="cursor-pointer w-50"
+              size="lg"
+              onClick={() => {
+                router.push("/mock-exams/years");
+                setIsLoading(true);
+              }}
+            >
+              {!isLoading ? "Ver Simulados Disponíveis" : <Spinner />}
+            </Button>
           </div>
         </div>
       </main>

@@ -1,27 +1,47 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 
-export default function ExamTimer({ duration, onTimeEnd }) {
+export default function ExamTimer({
+  duration,
+  timerKey,
+  onUpdateTimeRemining,
+  onTimeEnd,
+}) {
   const [timeRemaining, setTimeRemaining] = useState(duration);
   const [isRunning, setIsRunning] = useState(true);
+  const intervalRef = useRef();
 
   useEffect(() => {
-    let timer;
-    if (isRunning && timeRemaining > 0) {
-      timer = setInterval(() => {
-        setTimeRemaining((prev) => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            onTimeEnd && onTimeEnd();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+    if (typeof window !== "undefined") {
+      localStorage.setItem(timerKey, timeRemaining);
     }
-    return () => clearInterval(timer);
+    if (onUpdateTimeRemining) onUpdateTimeRemining(timeRemaining);
+  }, [timeRemaining, timerKey, onUpdateTimeRemining]);
+
+  useEffect(() => {
+    if (!isRunning) return;
+    if (timeRemaining <= 0) {
+      onTimeEnd && onTimeEnd();
+      return;
+    }
+    intervalRef.current = setInterval(() => {
+      setTimeRemaining((prev) => {
+        if (prev <= 1) {
+          clearInterval(intervalRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(intervalRef.current);
   }, [isRunning, timeRemaining, onTimeEnd]);
+
+  useEffect(() => {
+    if (timeRemaining <= 0 && typeof window !== "undefined") {
+      localStorage.removeItem(timerKey);
+    }
+  }, [timeRemaining, timerKey]);
 
   const hours = Math.floor(timeRemaining / 3600);
   const minutes = Math.floor((timeRemaining % 3600) / 60);

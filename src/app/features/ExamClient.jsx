@@ -10,6 +10,11 @@ import ExamSummary from "./ExamSummary";
 
 export default function ExamClient({ questions, year, day, useTimer }) {
   const [showSummary, setShowSummary] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState(
+    day == "1" ? 5.5 * 60 * 60 : 5 * 60 * 60, //5h30 ou 5h00
+  );
+  const timerKey = `examTimer-${year}-${day}`;
+
   const router = useRouter();
 
   const {
@@ -82,8 +87,6 @@ export default function ExamClient({ questions, year, day, useTimer }) {
       <div className="flex flex-col lg:flex-row gap-6">
         <div className="lg:w-1/4 bg-card rounded-lg p-4 shadow-sm h-fit ">
           <div className="mt-6 mb-6">
-            {useTimer && <ExamTimer duration={5 * 60 * 60} />}
-
             <div className="mt-6 flex flex-col gap-2">
               <button
                 onClick={() => setShowSummary(true)}

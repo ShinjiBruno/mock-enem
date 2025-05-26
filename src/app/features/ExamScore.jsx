@@ -31,7 +31,7 @@ export default function ExamScore({ score, questions }) {
               </span>
             </div>
             <button
-              className="mt-4 underline text-primary"
+              className="mt-4 underline text-primary cursor-pointer"
               onClick={() => route.push("/mock-exams/review")}
             >
               Revisar acertos e erros
