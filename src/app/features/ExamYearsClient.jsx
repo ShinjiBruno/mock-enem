@@ -112,23 +112,24 @@ export default function ExamYearsClient({ availableTests }) {
               </div>
               {(selectedExam?.year < 2017
                 ? examOptions.day !== "1"
-                : examOptions.day !== "2") && (
-                <div className="grid gap-2">
-                  <Label htmlFor="language">Idioma</Label>
-                  <Select
-                    defaultValue="pt"
-                    onValueChange={handleLanguageSelect}
-                  >
-                    <SelectTrigger id="language">
-                      <SelectValue placeholder="Selecione o idioma" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="ingles">Inglês</SelectItem>
-                      <SelectItem value="espanhol">Espanhol</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
+                : examOptions.day !== "2") &&
+                selectedExam?.year > 2009 && (
+                  <div className="grid gap-2">
+                    <Label htmlFor="language">Idioma</Label>
+                    <Select
+                      defaultValue="pt"
+                      onValueChange={handleLanguageSelect}
+                    >
+                      <SelectTrigger id="language">
+                        <SelectValue placeholder="Selecione o idioma" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="ingles">Inglês</SelectItem>
+                        <SelectItem value="espanhol">Espanhol</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
             </div>
 
             <DialogFooter>
