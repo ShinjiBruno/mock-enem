@@ -98,15 +98,21 @@ export default function ExamYearsClient({ availableTests }) {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="1">
-                      1º Dia - Linguagens e Humanas
+                      {selectedExam?.year < 2017
+                        ? "1º Dia - Ciências Humanas e Ciências da Natureza"
+                        : "1º Dia - Linguagens e Humanas"}
                     </SelectItem>
                     <SelectItem value="2">
-                      2º Dia - Ciências da Natureza e Matemática
+                      {selectedExam?.year < 2017
+                        ? "2º Dia - Linguagens e Matemática"
+                        : "2º Dia - Ciências da Natureza e Matemática"}
                     </SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-              {examOptions.day !== "2" && (
+              {(selectedExam?.year < 2017
+                ? examOptions.day !== "1"
+                : examOptions.day !== "2") && (
                 <div className="grid gap-2">
                   <Label htmlFor="language">Idioma</Label>
                   <Select
